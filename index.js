@@ -10,7 +10,7 @@
 			define(factory);
 	} 
 	else {
-			win.EASY_ROUTER = factory();
+			win.YAO_EASY_ROUTER = factory();
 	}
 })(this, function() {
   var APP = {};
