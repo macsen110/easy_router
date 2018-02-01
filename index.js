@@ -1,6 +1,7 @@
 /**
- * 简易路由系统适用于几
- * 个简单的活动页面
+ * 简易路由系统
+ * 上手快
+ * 配置简单
  */
 (function (win, factory) {
 	if (typeof exports === 'object') {
@@ -10,14 +11,14 @@
 			define(factory);
 	} 
 	else {
-			win.YAO_EASY_ROUTER = factory();
+			win.EASY_ROUTER = factory();
 	}
 })(this, function() {
   var APP = {};
-  APP.tools = {
+  var _tools = {
     setPath: function (obj) {
 			var path = location.pathname;
-			delete obj.replace;
+			delete obj._replace;
 			return path + '?' + this.serializeObj(obj)
 		},
 		serializeObj: function (options) {
@@ -67,13 +68,13 @@
 			return false;
 		}
 	};
-	APP.router = {
+	APP = {
 		setRouter: function (stateObj, component, title) {
 			if (!('urlAction' in stateObj)) {
-				if (stateObj.replace) history.replaceState(stateObj, title, APP.tools.setPath(stateObj));
-				else history.pushState(stateObj, title, APP.tools.setPath(stateObj));
+				if (stateObj._replace) history.replaceState(stateObj, title, _tools.setPath(stateObj));
+				else history.pushState(stateObj, title, _tools.setPath(stateObj));
 			}
-			APP.tools.setPageTitle(title)
+			_tools.setPageTitle(title)
 			this.updatePageView(component, stateObj)
 		},
 		updatePageView: function (component, stateObj) {
@@ -83,27 +84,31 @@
 		},
 		curPathWidget: undefined,
 		curPathName: undefined,
-		cbPathObj: APP.tools.cbPathObj(),
+		cbPathObj: _tools.cbPathObj(),
 		go: function (name, query) {
 			var stateObj = {};
 			var self = this;
 			stateObj.pageName = name;
-			if (APP.tools.getType(query) === 'object') {
+			if (_tools.getType(query) === 'object') {
 				for (var i in query) stateObj[i] = query[i];
 			}
+			console.log('go')
 			self._gotoPage(stateObj)
 		},
 		replace: function (name, query) {
+			console.log('replace');
 			var stateObj = {};
 			var self = this;
 			stateObj.pageName = name;
-			stateObj.replace = 1;
-			if (APP.tools.getType(query) === 'object') {
+			stateObj._replace = 1;
+			if (_tools.getType(query) === 'object') {
 				for (var i in query) stateObj[i] = query[i];
 			}
 			self._gotoPage(stateObj)
 		},
 		_gotoPage: function (stateObj) {
+			console.log(222)
+
 			this.curPathName = stateObj.pageName;
 			this._goPathNew(stateObj.pageName, stateObj);            
 		},
@@ -111,7 +116,7 @@
 			var stateObj = {};
 			if (this.cbPathObj) stateObj = this.cbPathObj;
 			else stateObj.pageName = 'home';
-			stateObj.replace = 1;
+			stateObj._replace = 1;
 			this._gotoPage(stateObj);
 			this.cbPath = null;
 		},
@@ -128,6 +133,8 @@
 			self._routerConfigArr = config || [];
 			self._registerListener();
 			self.initJump()
+			console.log('_init');
+			return this;
 		},
 		_registerListener() {
 			var self = this;
@@ -140,7 +147,9 @@
 			}
 		},
 		_goPathNew: function (path, stateObj) {
+			console.log('11111')
 			var self = this;
+
 			var filterCurRouterObjArr = self._routerConfigArr.filter(
 				function (item) {return item.pageName === path}
 			)
@@ -152,11 +161,14 @@
 				}
 				else self.toDoRouterCb(stateObj, filterCurRouterObj.component,filterCurRouterObj.title)
 			}
-			else alert(path + '路径尚未配置相关信息')
+			else {
+				console.log(path + '路径尚未配置相关信息')
+				self.toDoRouterCb(stateObj, '','')
+			}
 		},
 		toDoRouterCb: function (stateObj, component, title) {
-			if (APP.tools.getType(component) === 'function') component(stateObj, this, title)
-			else if (APP.tools.getType(component) === 'object') {
+			if (_tools.getType(component) === 'function') component(stateObj, this, title)
+			else if (_tools.getType(component) === 'object') {
 				component.init && component.init(stateObj, this, title)
 			}
 		}
