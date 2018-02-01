@@ -5,7 +5,7 @@
 ```bash
 npm i yao-easy-router --save
 
-import router form 'yao-m-ui' 
+import router form 'yao-easy-router' 
 
 var config = [
     {
@@ -31,7 +31,7 @@ router.config(config)
 ```bash
 npm i yao-easy-router --save
 
-var router = require('yao-m-ui')
+var router = require('yao-easy-router')
 
 ```
 
@@ -40,8 +40,22 @@ var router = require('yao-m-ui')
 ```js
 
 <script src="./index.js"></script>
-
-window.YAO_EASY_ROUTER.config({})
+var config = [
+    {
+        name: 'home',
+        component: (obj, component, title) => {},
+        title: '首页'
+    },
+    {
+        name: 'list',
+        component: {
+            init: () => {},
+            destory: () => {}
+        },
+        title: '列表页'
+    }
+]
+window.YAO_EASY_ROUTER.config(config)
 
 ```
 

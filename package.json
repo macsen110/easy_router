@@ -1,6 +1,6 @@
 {
   "name": "yao-easy-router",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "description": "easy router for pages",
   "main": "index.js",
   "scripts": {
