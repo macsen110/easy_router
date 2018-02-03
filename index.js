@@ -134,14 +134,14 @@
       this._gotoPage(stateObj);
       this.cbPath = null;
     },
-    _init(config) {
+    _init: function(config) {
       var self = this;
       self._routerConfigArr = config || [];
       self._registerListener();
       self.initJump();
       return this;
     },
-    _registerListener() {
+    _registerListener:function() {
       var self = this;
       window.onpopstate = function(event) {
         var stateObj = event.state;
