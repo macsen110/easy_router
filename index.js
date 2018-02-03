@@ -86,6 +86,9 @@
     }
   };
   APP = {
+    _config: {
+      _rootDom: null,
+    },
     setRouter: function(stateObj, component, title) {
       if (!("urlAction" in stateObj)) {
         if (stateObj._replace)
@@ -98,6 +101,7 @@
     updatePageView: function(component, stateObj) {
       if (this.curPathWidget)
         this.curPathWidget.destroy && this.curPathWidget.destroy();
+        this._config._rootDom && (this._config._rootDom.innerHTML = '')
       this.curPathWidget = component;
     },
     curPathWidget: undefined,
