@@ -42,11 +42,11 @@
       var $body = document.body;
       title && (document.title = title);
     },
-    cbPathObj: function() {
+    getCbPathObj: function() {
       var query = location.search;
       if ("pageName" in this.getLocationParam(query)) {
         var cbPathObj = this.getLocationParam(query);
-        if (cbPathObj.pageName !== "index") {
+        if (cbPathObj.pageName !== "home") {
           delete cbPathObj.openId;
           delete cbPathObj.appType;
           return cbPathObj;
@@ -106,7 +106,7 @@
     },
     curPathWidget: undefined,
     curPathName: undefined,
-    cbPathObj: _tools.cbPathObj(),
+    getCbPathObj: _tools.getCbPathObj.bind(_tools),
     go: function(name, query) {
       var stateObj = {};
       var self = this;
@@ -132,7 +132,7 @@
     },
     initJump: function() {
       var stateObj = {};
-      if (this.cbPathObj) stateObj = this.cbPathObj;
+      if (this.getCbPathObj()) stateObj = this.getCbPathObj();
       else stateObj.pageName = "home";
       stateObj._replace = 1;
       this._gotoPage(stateObj);
