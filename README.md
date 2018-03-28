@@ -111,10 +111,9 @@ router.go('detail', {id: 3})//跳转到详情页,id为3
 router.replace(name:String, params:Object)
 替换一个新页面,用法同上
 
-## Document
 
+[Demo地址](https://www.macsen318.com/mch) 
 
-Demo地址 
 Contact 
 
 * email 839945193@qq.com or liangyusen1202@gmail.com
